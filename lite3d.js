@@ -1,7 +1,7 @@
 const ZORDER = 0.025 / 4
 
 // these are for the camera i think
-var cx=0, cy=0, cz=-200, rx=0, ry=0, rz=0
+var cx=-40, cy=20, cz=-80, rx=60, ry=0, rz=0
 
 // also another awful thing i did in order to not cause conflict with rx, ry,
 // rz being used for the camera was that i made all of those variables have
@@ -17,21 +17,21 @@ function degToRad(x) {
 // xyz coords, xyz origin, xyz rotation
 function DrawTri3D(ctx, x1, y1, z1, x2, y2, z2, x3, y3, z3, ox, oy, oz, _x, _y, _z) {
 		var x = [0, 0, 0], y = [0, 0, 0], z = [0, 0, 0]
-		x[0] = x1 ; x[1] = x2 ; x[2] = x3
-		y[0] = y1 ; y[1] = y2 ; y[2] = y3
-		z[0] = z1 ; z[1] = z2 ; z[2] = z3
+		x[0] = x1 ; x[1] = x2 ; x[2] = x3;
+		y[0] = y1 ; y[1] = y2 ; y[2] = y3;
+		z[0] = z1 ; z[1] = z2 ; z[2] = z3;
 		for (var i = 0; i < 3; i++) {
-				x[i] -= ox ; y[i] -= oy ; z[i] -= oz
-				[x[i], z[i]] = RotMath(_x, x[i], z[i])
-				[x[i], y[i]] = RotMath(_y, x[i], y[i])
-				[z[i], y[i]] = RotMath(_z, z[i], y[i])
-				x[i] += ox ; y[i] += oy ; z[i] += oz
+				x[i] -= ox ; y[i] -= oy ; z[i] -= oz;
+				[x[i], z[i]] = RotMath(_x, x[i], z[i]);
+				[x[i], y[i]] = RotMath(_y, x[i], y[i]);
+				[z[i], y[i]] = RotMath(_z, z[i], y[i]);
+				x[i] += ox ; y[i] += oy ; z[i] += oz;
 				// coords
-				x[i] -= cx ; y[i] -= cy ; z[i] -= cz
+				x[i] -= cx ; y[i] -= cy ; z[i] -= cz;
 				// rotation
-				[x[i], z[i]] = RotMath(rx, x[i], z[i])
-				[x[i], y[i]] = RotMath(ry, x[i], y[i])
-				[z[i], y[i]] = RotMath(rz, z[i], y[i])				
+				[x[i], z[i]] = RotMath(rx, x[i], z[i]);
+				[x[i], y[i]] = RotMath(ry, x[i], y[i]);
+				[z[i], y[i]] = RotMath(rz, z[i], y[i]);				
 		}
 		// i will only support this... seeing how i never actually used the
 		// filled triangle in my rendering since it looked ugly
@@ -48,7 +48,7 @@ function DrawTri3D(ctx, x1, y1, z1, x2, y2, z2, x3, y3, z3, ox, oy, oz, _x, _y, 
 }
 
 function DrawPrism(ctx, x, y, z, p, sd, h, rx, ry, rz) {
-		var sl = p/sd, a = (sl)/(2*Math.tan(Math.PI/sd))
+		var sl = p/sd, a = sl/(2*Math.tan(Math.PI/sd))
 		for (var i = sd; i >= 0; i--) {
 				var r = degToRad(i*(360/sd)+45)
 				var jx = Math.cos(r)*a+x, jy=Math.sin(r)*r+y
@@ -89,7 +89,7 @@ function draw() {
 		ctx.globalCompositeOperation = 'destination-over';
 		ctx.clearRect(0, 0, 400, 240); // clear canvas
 		DrawPrism(ctx, 0, 30, 0, 190, 4, 100, 0, r, 0)
-		// DrawTri3D(ctx, 3, 0, 3, -3, 0, 3, 0, -3, 3, 1, 1, 1, 0, 0, 0)
+		DrawTri3D(ctx, 3, 0, 9, -3, 0, 3, 0, -3, 3, 1, 1, 1, 0, r, 0)
 		window.requestAnimationFrame(draw)
 }
 
